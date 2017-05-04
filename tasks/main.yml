@@ -1,0 +1,18 @@
+---
+# tasks file for hdp-users
+
+- debug: msg="{{ item }}"
+  with_items: "{{ users }}"
+
+- name: create user groups
+  group: 
+    name: "{{ item.name }}"
+    gid: "{{ item.uid }}"
+  with_items: "{{ users }}"
+
+- name: create users
+  user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid }}"
+    group: "{{ item.name }}"
+    with_items: "{{ users }}"
